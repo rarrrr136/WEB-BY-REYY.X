@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>REYY.X BOTNET DDOS | SHARE & AMPLIFY</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💀</text></svg>">
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+    <canvas id="fireCanvas"></canvas>
+    <canvas id="botCanvas"></canvas>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="glitch" data-text="💀 REYY.X SHARE & AMPLIFY 💀">💀 REYY.X SHARE & AMPLIFY 💀</h1>
+            <p class="subtitle">"KASIH LINK KE TEMEN LO, MAKIN BANYAK MAKIN BRUTAL, BANGSAT!"</p>
+            <div class="status-badge" id="statusBadge">☠️ SHARE MODE ACTIVE ☠️</div>
+        </div>
+
+        <!-- SHARE LINK PANEL -->
+        <div class="share-panel">
+            <div class="share-header">
+                <span>🔗 SHARE LINK AMPLIFIER 🔗</span>
+                <div class="visitor-count" id="visitorCount">👥 TOTAL ATTACKERS: 1 (YOU)</div>
+            </div>
+            
+            <div class="share-url-container">
+                <input type="text" id="shareUrl" readonly class="share-url-input" value="Loading...">
+                <button id="copyLinkBtn" class="copy-btn">📋 COPY</button>
+                <button id="shareBtn" class="share-btn">📤 SHARE</button>
+            </div>
+            
+            <div class="qr-container" id="qrContainer">
+                <div id="qrCode"></div>
+                <span class="qr-text">SCAN QR UNTUK BANTU SERANG</span>
+            </div>
+            
+            <div class="amplifier-stats">
+                <div class="amp-stat">
+                    <div class="amp-label">💀 TOTAL ATTACKERS</div>
+                    <div class="amp-value" id="totalAttackers">1</div>
+                </div>
+                <div class="amp-stat">
+                    <div class="amp-label">⚡ AMPLIFIER BONUS</div>
+                    <div class="amp-value" id="amplifierBonus">1x</div>
+                </div>
+                <div class="amp-stat">
+                    <div class="amp-label">🎯 ESTIMATED RPS</div>
+                    <div class="amp-value" id="estimatedRPS">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTNET CONTROL PANEL -->
+        <div class="botnet-panel">
+            <div class="botnet-header">
+                <span>🤖 BOTNET COMMAND CENTER 🤖</span>
+                <button id="deployAllBots" class="bot-btn">💀 DEPLOY ALL BOTS 💀</button>
+            </div>
+            
+            <div class="bot-stats">
+                <div class="bot-stat-card"><div class="bot-stat-label">🤖 ACTIVE BOTS</div><div class="bot-stat-value" id="activeBots">0</div></div>
+                <div class="bot-stat-card"><div class="bot-stat-label">⚡ TOTAL THREADS</div><div class="bot-stat-value" id="totalBotThreads">0</div></div>
+                <div class="bot-stat-card"><div class="bot-stat-label">🌐 UNIQUE IPS</div><div class="bot-stat-value" id="uniqueIPsPanel">0</div></div>
+                <div class="bot-stat-card"><div class="bot-stat-label">👥 COLLAB</div><div class="bot-stat-value" id="collabCount">1</div></div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>🎯 TARGET URL / IP (http:// atau https://)</label>
+            <input type="text" id="targetUrl" placeholder="https://targetwebsite.com" class="target-input">
+            <div class="target-suggestions">
+                <span class="suggestion" onclick="setTarget('https://httpbin.org')">🔧 TEST SERVER</span>
+                <span class="suggestion" onclick="setTarget('https://httpbin.org/get')">📡 API TEST</span>
+                <span class="suggestion" onclick="setTarget('http://localhost:3000')">💻 LOCALHOST</span>
+            </div>
+        </div>
+
+        <div class="config-panel">
+            <div class="config-row">
+                <div class="config-item"><label>🤖 BOT PER ATTACKER</label><input type="number" id="botCount" value="50" min="1" max="200" class="number-input"></div>
+                <div class="config-item"><label>💣 THREADS PER BOT</label><input type="number" id="threadsPerBot" value="5" min="1" max="20" class="number-input"></div>
+                <div class="config-item"><label>⏱️ DELAY (ms)</label><input type="number" id="delay" value="0" min="0" max="100" class="number-input"></div>
+            </div>
+            <div class="config-row">
+                <div class="config-item full"><label>🔧 ATTACK MODE</label>
+                    <select id="attackMode" class="select-input">
+                        <option value="nuclear">💀 NUCLEAR MODE - 25 VECTOR</option>
+                        <option value="http">🔥 HTTP FLOOD</option>
+                        <option value="slowloris">🐌 SLOWLORIS</option>
+                        <option value="xmlrpc">📡 XMLRPC FLOOD</option>
+                        <option value="multipart">📦 MULTIPART FLOOD</option>
+                    </select>
+                </div>
+            </div>
+            <div class="config-row">
+                <div class="config-item"><label>⚡ INTENSITY (1-10)</label><input type="range" id="intensity" min="1" max="10" value="10" class="slider-input"><span id="intensityValue">10 - MAX</span></div>
+                <div class="config-item"><label>🔄 AUTO REGEN</label><input type="checkbox" id="autoRegen" checked></div>
+            </div>
+        </div>
+
+        <div class="stats-panel">
+            <div class="stat-card"><div class="stat-label">📊 TOTAL REQUESTS</div><div class="stat-value" id="totalRequests">0</div></div>
+            <div class="stat-card"><div class="stat-label">⚡ RPS</div><div class="stat-value" id="requestsPerSec">0</div></div>
+            <div class="stat-card"><div class="stat-label">💀 SUCCESS RATE</div><div class="stat-value" id="successRate">0%</div></div>
+            <div class="stat-card"><div class="stat-label">🕐 DURATION</div><div class="stat-value" id="duration">00:00:00</div></div>
+            <div class="stat-card"><div class="stat-label">🌐 UNIQUE IPS</div><div class="stat-value" id="uniqueIPs">0</div></div>
+            <div class="stat-card"><div class="stat-label">🔥 BANDWIDTH</div><div class="stat-value" id="bandwidth">0 GB/s</div></div>
+        </div>
+
+        <div class="attack-indicator" id="attackIndicator">
+            <div class="indicator-text">💀 MULTI-USER ATTACK IN PROGRESS 💀</div>
+            <div class="pulse-wave"></div>
+        </div>
+
+        <div class="log-container">
+            <div class="log-header"><span>📋 ATTACK LOG</span><button id="clearLog" class="clear-btn">CLEAR</button></div>
+            <div id="logContent" class="log-content"></div>
+        </div>
+
+        <div class="button-group">
+            <button id="startBtn" class="btn btn-start">💀 LAUNCH ATTACK 💀</button>
+            <button id="stopBtn" class="btn btn-stop" disabled>🛑 STOP ATTACK 🛑</button>
+        </div>
+
+        <div class="warning">
+            ⚠️ SHARE LINK INI KE TEMEN LO! MAKIN BANYAK YANG BUKA, MAKIN BRUTAL SERANGANNYA!<br>
+            🔥 GUNAKAN UNTUK TESTING SERVER SENDIRI! SERANGAN ILEGAL = PIDANA!
+        </div>
+    </div>
+
+    <div class="hacker-text" id="hackerText"></div>
+    <div class="victim-counter" id="victimCounter">💀 WEBSITE DESTROYED: 0</div>
+    <div class="bot-counter" id="botCounter">🤖 BOTS: 0 | 👥 ATTACKERS: 1</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="config.js"></script>
+    <script src="share-amplify.js"></script>
+    <script src="botnet-core.js"></script>
+    <script src="bot-manager.js"></script>
+</body>
+</html>
